@@ -1,0 +1,22 @@
+ALTER TABLE "User" RENAME COLUMN "name" TO "fullname";
+ALTER TABLE "User" DROP COLUMN "age",
+ADD COLUMN "username" TEXT,
+ADD COLUMN "bio" TEXT,
+ADD COLUMN "isPrivate" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+UPDATE "User" SET "username" = "email";
+ALTER TABLE "User" ALTER COLUMN "username" SET NOT NULL;
+ALTER TABLE "User" ALTER COLUMN "updatedAt" DROP DEFAULT;
+CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
+
+CREATE TABLE "Post" (
+    "id" SERIAL NOT NULL,
+    "imageUrl" TEXT NOT NULL,
+    "caption" TEXT,
+    "location" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
+);
